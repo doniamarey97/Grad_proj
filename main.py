@@ -122,21 +122,5 @@ async def enhance_latest():
         raise HTTPException(status_code=500, detail=f"Error enhancing text: {e}")
 
 
-async def detect_topics(text: str):
-    response = model.generate_content(
-        f"List only the main topics discussed in this text as bullet points. No explanations:\n{text}"
 
-    )
-    return response.text
-
-@app.get("/detect_topics/")
-async def detect_topics_latest():
-    if "latest" not in transcription_cache:
-        raise HTTPException(status_code=400, detail="No transcribed text found.")
-    
-    try:
-        topics = await detect_topics(transcription_cache["latest"])
-        return {"topics": topics}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error extracting topics: {e}")
 
