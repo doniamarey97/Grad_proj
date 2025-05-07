@@ -72,7 +72,9 @@ async def summarize_text(text: str):
 async def enhance_text(text: str):
     """Function to improve grammar and clarity of transcribed text."""
     try:
-        response = model.generate_content(f"Enhance the grammar and clarity of this text: {text}")
+        response = model.generate_content(f"Improve the following text by correcting grammar, enhancing clarity, and making it more natural-sounding. "
+            "Do not add new content or remove important meaning. Just return the improved version without any comments, notes, or explanation:\n\n"
+            f"{text}")
         return response.text  # Extract enhanced text
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error enhancing text: {e}")
@@ -230,3 +232,4 @@ async def speaking_analysis(file: UploadFile = File(...)):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error during speaking analysis: {e}")
+    
